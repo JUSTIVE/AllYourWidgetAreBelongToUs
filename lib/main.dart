@@ -13,13 +13,13 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     // set material design app
     return MaterialApp(
-      title: 'solocoding2019', // application name
+      title: 'Hello World', // application name
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter Demo'), // app bar title
+          title: Text('Hello World'), // app bar title
         ),
         body: Center(
           child: Text('Hello, world'), // center text
