@@ -1,4 +1,4 @@
-import '../model/Task.dart';
+import '../model/task.dart';
 import 'package:bloc/bloc.dart';
 
 abstract class TaskEvent {

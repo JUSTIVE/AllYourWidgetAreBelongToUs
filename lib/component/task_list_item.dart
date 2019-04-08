@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../model/task.dart';
 
 class TaskListItem extends StatefulWidget {
   @override
@@ -9,8 +8,6 @@ class TaskListItem extends StatefulWidget {
 class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return null;
   }
 }
