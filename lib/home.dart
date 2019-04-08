@@ -37,11 +37,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ListView(
                     shrinkWrap: true,
                     children: <Widget>[
-                      Column(
-                        children: (bloc as List<Task>)
-                            .where((x) => x.isDone != true)
-                            .map((x) => TaskListItem())
-                            .toList(),
+                      Padding(
+                        child: Column(
+                          children: (bloc as List<Task>)
+                              .where((x) => x.isDone != true)
+                              .map((x) => TaskListItem(task: x))
+                              .toList(),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 32),
                       )
                     ],
                   )

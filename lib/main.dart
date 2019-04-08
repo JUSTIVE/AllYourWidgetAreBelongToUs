@@ -35,6 +35,9 @@ class MyAppState extends State<MyApp> {
                   fontSize: 42,
                   color: Colors.black.withOpacity(0.56),
                   fontWeight: FontWeight.w900
+                ),
+                body1: TextStyle(
+                  fontSize: 18
                 )
               )
             ),
