@@ -33,8 +33,11 @@ class MyAppState extends State<MyApp> {
               textTheme: TextTheme(
                 title: TextStyle(
                   fontSize: 42,
-                  color: Colors.black87,
+                  color: Colors.black.withOpacity(0.56),
                   fontWeight: FontWeight.w900
+                ),
+                body1: TextStyle(
+                  fontSize: 18
                 )
               )
             ),

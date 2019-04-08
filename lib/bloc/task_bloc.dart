@@ -1,18 +1,17 @@
-import '../model/Task.dart';
+import 'package:meta/meta.dart';
+import '../model/task.dart';
 import 'package:bloc/bloc.dart';
 
-abstract class TaskEvent {
-  final int id;
-  TaskEvent({this.id});
-}
+abstract class TaskEvent {}
 
 class AddTaskEvent extends TaskEvent {
   final String name;
-  AddTaskEvent({id, this.name}) : super(id: id);
+  AddTaskEvent({@required this.name});
 }
 
 class DoneTaskEvent extends TaskEvent {
-  DoneTaskEvent({id}) : super(id: id);
+  final int id;
+  DoneTaskEvent({@required this.id});
 }
 
 class TaskBloc extends Bloc<TaskEvent, List<Task>> {
