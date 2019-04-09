@@ -18,6 +18,15 @@ class _TaskListItemState extends State<TaskListItem> {
           padding: EdgeInsets.all(8),
           child: Row(
             children: <Widget>[
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  shape:BoxShape.circle,
+                  color: widget.task.color
+                ),
+              ),
+              SizedBox(width: 16,),
               Text(
                 widget.task.name,
                 style: Theme.of(context).textTheme.body1,

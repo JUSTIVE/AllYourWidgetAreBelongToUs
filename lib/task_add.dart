@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'bloc/task_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'bloc/task_bloc.dart';
+import 'component/color_radio_widget.dart';
 
 class TaskAddScreen extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class TaskAddScreen extends StatefulWidget {
 class _TaskAddScreenState extends State<TaskAddScreen> {
   TextEditingController _textEditingController;
   GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     _textEditingController = TextEditingController();
@@ -18,7 +21,7 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final taskBloc = BlocProvider.of<TaskBloc>(context);
+    final TaskBloc taskBloc = BlocProvider.of<TaskBloc>(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(children: [
@@ -39,6 +42,7 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
@@ -61,7 +65,10 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
                       onPressed: () {
                         if (_textEditingController.text.trim() != "") {
                           BlocProvider.of<TaskBloc>(context).dispatch(
-                              AddTaskEvent(name: _textEditingController.text));
+                              AddTaskEvent(
+                                  name: _textEditingController.text,
+                                  color: ColorRadio
+                                      .colorTable[ColorRadio.currentColorId]));
                           Navigator.pop(context);
                         } else {
                           (_scaffoldKey.currentState as ScaffoldState)
@@ -93,7 +100,11 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.white,
-                  ))
+                  )),
+              SizedBox(
+                height: 32,
+              ),
+              Container(height: 52, child: ColorRadio())
             ],
           ),
         )

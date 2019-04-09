@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'dart:ui';
 import '../model/task.dart';
 import 'package:bloc/bloc.dart';
 
@@ -6,7 +7,8 @@ abstract class TaskEvent {}
 
 class AddTaskEvent extends TaskEvent {
   final String name;
-  AddTaskEvent({@required this.name});
+  final Color color;
+  AddTaskEvent({@required this.name,@required this.color});
 }
 
 class DoneTaskEvent extends TaskEvent {
