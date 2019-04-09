@@ -9,7 +9,7 @@ class TaskAddScreen extends StatefulWidget {
 
 class _TaskAddScreenState extends State<TaskAddScreen> {
   TextEditingController _textEditingController;
-
+  GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     _textEditingController = TextEditingController();
@@ -20,6 +20,7 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
   Widget build(BuildContext context) {
     final taskBloc = BlocProvider.of<TaskBloc>(context);
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(children: [
         Hero(
           tag: "addingHero",
@@ -52,15 +53,22 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
                           .title
                           .copyWith(color: Colors.white),
                     ),
-                    FlatButton(
-                      child: Text(
-                        "Done",
-                        style: TextStyle(color: Colors.white),
+                    IconButton(
+                      icon: Icon(
+                        Icons.check,
+                        color: Colors.white,
                       ),
                       onPressed: () {
-                        BlocProvider.of<TaskBloc>(context).dispatch(
-                            AddTaskEvent(name: _textEditingController.text));
-                        Navigator.pop(context);
+                        if (_textEditingController.text.trim() != "") {
+                          BlocProvider.of<TaskBloc>(context).dispatch(
+                              AddTaskEvent(name: _textEditingController.text));
+                          Navigator.pop(context);
+                        } else {
+                          (_scaffoldKey.currentState as ScaffoldState)
+                              .showSnackBar(SnackBar(
+                            content: Text("이름을 붙여주세요"),
+                          ));
+                        }
                       },
                     )
                   ],
