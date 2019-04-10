@@ -47,7 +47,28 @@ class _HomeWidgetState extends State<HomeWidget> {
                         padding: EdgeInsets.symmetric(horizontal: 32),
                       )
                     ],
-                  )
+                  ),
+                  SizedBox(height: 32,),
+                  Padding(
+                    padding: const EdgeInsets.only(left:32),
+                    child: Text("done"),
+                  ),
+                  SizedBox(height: 16),
+                  ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      Padding(
+                        child: Column(
+                          children: (bloc as List<Task>)
+                              .where((x) => x.isDone == true)
+                              .map((x) => TaskListItem(task: x))
+                              .toList(),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                      )
+                    ],
+                  ),
+
                 ],
               ),
         ),
