@@ -19,11 +19,8 @@ class ColorRadio extends StatefulWidget {
 class _ColorRadioState extends State<ColorRadio> {
   List<ColorListItem> _colorListItem;
 
-  StreamController<List<bool>> _updater = StreamController<List<bool>>();
-
   void onTouch(int id) {
     ColorRadio.currentColorId = id;
-
   }
 
   @override
@@ -36,7 +33,7 @@ class _ColorRadioState extends State<ColorRadio> {
               color: color,
               colorId: index,
               onTouch: (int id) {},
-              stream: _updater.stream
+
             )))
         .values
         .toList();
@@ -60,12 +57,11 @@ class ColorListItem extends StatefulWidget {
   final Color color;
   final int colorId;
   final Function(int) onTouch;
-  final Stream<List<bool>> stream;
+
   ColorListItem(
       {@required this.color,
       @required this.colorId,
-      @required this.onTouch,
-      @required this.stream});
+      @required this.onTouch});
   @override
   _ColorListItemState createState() => _ColorListItemState();
 }
@@ -78,12 +74,6 @@ class _ColorListItemState extends State<ColorListItem> {
     setState((){
       _selected = newSelected;
     });
-  }
-
-  @override
-  void initState() {
-    widget.stream.listen((selected){updateSelected(selected[widget.colorId]);});
-    super.initState();
   }
 
   @override
