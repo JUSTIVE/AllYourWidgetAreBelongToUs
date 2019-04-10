@@ -13,6 +13,19 @@ class _TaskListItemState extends State<TaskListItem> {
   Widget build(BuildContext context) {
     return Dismissible(
       key: Key(widget.task.id.toString()),
+      onDismissed: (direction) {
+        setState(() {
+          switch (direction) {
+            case DismissDirection.startToEnd:
+              widget.task.isDone = true;
+              break;
+            case DismissDirection.endToStart:
+              break;
+            default:
+              break;
+          }
+        });
+      },
       child: Material(
         child: Padding(
           padding: EdgeInsets.all(8),
@@ -22,11 +35,11 @@ class _TaskListItemState extends State<TaskListItem> {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  shape:BoxShape.circle,
-                  color: widget.task.color
-                ),
+                    shape: BoxShape.circle, color: widget.task.color),
               ),
-              SizedBox(width: 16,),
+              SizedBox(
+                width: 16,
+              ),
               Text(
                 widget.task.name,
                 style: Theme.of(context).textTheme.body1,
