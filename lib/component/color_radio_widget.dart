@@ -32,8 +32,10 @@ class _ColorRadioState extends State<ColorRadio> {
             ColorListItem(
               color: color,
               colorId: index,
-              onTouch: (int id) {},
-
+              onTouch: (int id) {
+                ColorRadio.currentColorId = id;
+                print(ColorRadio.currentColorId);
+              },
             )))
         .values
         .toList();
@@ -59,19 +61,16 @@ class ColorListItem extends StatefulWidget {
   final Function(int) onTouch;
 
   ColorListItem(
-      {@required this.color,
-      @required this.colorId,
-      @required this.onTouch});
+      {@required this.color, @required this.colorId, @required this.onTouch});
   @override
   _ColorListItemState createState() => _ColorListItemState();
 }
 
 class _ColorListItemState extends State<ColorListItem> {
+  bool _selected = false;
 
-  bool _selected=false;
-
-  void updateSelected(bool newSelected){
-    setState((){
+  void updateSelected(bool newSelected) {
+    setState(() {
       _selected = newSelected;
     });
   }
