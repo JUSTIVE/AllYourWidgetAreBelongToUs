@@ -3,38 +3,43 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class ColorRadio extends StatefulWidget {
-  static int currentColorId = 0;
-  static final List<Color> colorTable = [
-    Colors.blue.shade300,
-    Colors.red.shade300,
-    Colors.amber.shade300
-  ];
-
-  static Color getCurrentColor() => colorTable[currentColorId];
-
   @override
   _ColorRadioState createState() => _ColorRadioState();
 }
 
 class _ColorRadioState extends State<ColorRadio> {
+  StreamController<int> _streamController = StreamController<int>.broadcast();
+  int currentColorId = 0;
   List<ColorListItem> _colorListItem;
+  Color getCurrentColor() => colorTable[currentColorId];
+  final List<Color> colorTable = [
+    Colors.blue.shade300,
+    Colors.red.shade300,
+    Colors.amber.shade300,
+    Colors.purpleAccent.shade400
+  ];
 
   void onTouch(int id) {
-    ColorRadio.currentColorId = id;
+    setState(() {
+      this.currentColorId = id;
+      _streamController.add(this.currentColorId);
+    });
   }
 
   @override
   void initState() {
-    _colorListItem = ColorRadio.colorTable
+    _colorListItem = this
+        .colorTable
         .asMap()
         .map((index, color) => MapEntry(
             index,
             ColorListItem(
+              stream: _streamController.stream,
               color: color,
               colorId: index,
               onTouch: (int id) {
-                ColorRadio.currentColorId = id;
-                print(ColorRadio.currentColorId);
+                this.currentColorId = id;
+                print(this.currentColorId);
               },
             )))
         .values
@@ -58,17 +63,24 @@ class _ColorRadioState extends State<ColorRadio> {
 class ColorListItem extends StatefulWidget {
   final Color color;
   final int colorId;
+  final Stream<int> stream;
   final Function(int) onTouch;
+  final ColorRadio parent;
 
   ColorListItem(
-      {@required this.color, @required this.colorId, @required this.onTouch});
+      {@required this.parent,
+      @required this.color,
+      @required this.colorId,
+      @required this.onTouch,
+      @required this.stream});
   @override
-  _ColorListItemState createState() => _ColorListItemState();
+  _ColorListItemState createState() =>
+      _ColorListItemState();
 }
 
 class _ColorListItemState extends State<ColorListItem> {
   bool _selected = false;
-
+  
   void updateSelected(bool newSelected) {
     setState(() {
       _selected = newSelected;
@@ -81,7 +93,12 @@ class _ColorListItemState extends State<ColorListItem> {
       padding: const EdgeInsets.only(right: 16),
       child: Stack(children: [
         InkWell(
-          onTap: widget.onTouch(widget.colorId),
+          onTap: () {
+            widget.onTouch(widget.colorId);
+            widget.stream.listen((parentId) {
+              _selected = parentId == widget.colorId;
+            });
+          },
           child: Container(
             decoration: BoxDecoration(
                 color: widget.color, borderRadius: BorderRadius.circular(16)),
