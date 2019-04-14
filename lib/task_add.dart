@@ -12,7 +12,7 @@ class TaskAddScreen extends StatefulWidget {
 class _TaskAddScreenState extends State<TaskAddScreen> {
   TextEditingController _textEditingController;
   GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
-  GlobalKey _colorRadioKey = GlobalKey();
+  final _colorRadioKey = GlobalKey<ColorRadioState>();
 
   @override
   void initState() {
@@ -68,7 +68,8 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
                           BlocProvider.of<TaskBloc>(context).dispatch(
                               AddTaskEvent(
                                   name: _textEditingController.text,
-                                  color: (_colorRadioKey .currentState).colorTable[_colorRadioKey.currentState.currentColorId]));
+                                  color: ColorRadio.colorTable[_colorRadioKey
+                                      .currentState.currentColorId]));
                           Navigator.pop(context);
                         } else {
                           (_scaffoldKey.currentState as ScaffoldState)
