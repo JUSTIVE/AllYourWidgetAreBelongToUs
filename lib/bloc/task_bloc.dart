@@ -25,7 +25,8 @@ class TaskBloc extends Bloc<TaskEvent, List<Task>> {
   Stream<List<Task>> mapEventToState(event)async* {
     switch (event.runtimeType) {
       case AddTaskEvent:
-        currentState.add(Task(id: counter++, name: (event as AddTaskEvent).name));
+        
+        currentState.add(Task(id: counter++, name: (event as AddTaskEvent).name,color: (event as AddTaskEvent).color));
         break;
       case DoneTaskEvent:
         break;

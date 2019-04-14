@@ -34,23 +34,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                       style: Theme.of(context).textTheme.title,
                     ),
                   ),
-                  ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      Padding(
-                        child: Column(
-                          children: (bloc as List<Task>)
-                              .where((x) => x.isDone != true)
-                              .map((x) => TaskListItem(task: x))
-                              .toList(),
+                  (bloc as List<Task>).where((x) => x.isDone != true).length ==
+                          0
+                      ? Padding(
+                          padding: EdgeInsets.only(left: 32),
+                          child: Text("할일이 없어요"))
+                      : ListView(
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            Padding(
+                              child: Column(
+                                children: (bloc as List<Task>)
+                                    .where((x) => x.isDone != true)
+                                    .map((x) => TaskListItem(task: x))
+                                    .toList(),
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 32),
+                            )
+                          ],
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 32),
-                      )
-                    ],
+                  SizedBox(
+                    height: 32,
                   ),
-                  SizedBox(height: 32,),
                   Padding(
-                    padding: const EdgeInsets.only(left:32),
+                    padding: const EdgeInsets.only(left: 32),
                     child: Text("done"),
                   ),
                   SizedBox(height: 16),
@@ -68,7 +75,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                       )
                     ],
                   ),
-
                 ],
               ),
         ),

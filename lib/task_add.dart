@@ -22,7 +22,7 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TaskBloc taskBloc = BlocProvider.of<TaskBloc>(context);
+    // final TaskBloc taskBloc = BlocProvider.of<TaskBloc>(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(children: [
@@ -65,6 +65,9 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
                       ),
                       onPressed: () {
                         if (_textEditingController.text.trim() != "") {
+                          print(ColorRadio.colorTable[_colorRadioKey
+                                      .currentState.currentColorId]);
+
                           BlocProvider.of<TaskBloc>(context).dispatch(
                               AddTaskEvent(
                                   name: _textEditingController.text,
@@ -105,7 +108,7 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
               SizedBox(
                 height: 32,
               ),
-              Container(height: 52, child: ColorRadio())
+              Container(height: 52, child: ColorRadio(key: _colorRadioKey))
             ],
           ),
         )
