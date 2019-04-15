@@ -30,7 +30,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   Padding(
                     padding: EdgeInsets.only(left: 32),
                     child: Text(
-                      "TODOs",
+                      "TODO",
                       style: Theme.of(context).textTheme.title,
                     ),
                   ),
