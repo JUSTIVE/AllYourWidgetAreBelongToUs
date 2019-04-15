@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class ColorRadio extends StatefulWidget {
   static List<Color> colorTable = [
-    Colors.blue.shade300,
     Colors.red.shade300,
+    Colors.orange.shade300,
     Colors.amber.shade300,
-    Colors.purple.shade300
+    Colors.teal.shade300,
+    Colors.cyan.shade300,
+    Colors.blue.shade300,
+    Colors.purple.shade300,
+    Colors.pink.shade300,
   ];
   ColorRadio({Key key}) : super(key: key);
   @override
@@ -58,6 +62,7 @@ class ColorRadioState extends State<ColorRadio> {
     return Container(
       height: 52,
       child: ListView(
+        physics: ScrollPhysics(),
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         children: _colorListItem,
@@ -92,8 +97,8 @@ class _ColorRadioItemState extends State<ColorRadioItem> {
             widget.action(widget.colorId);
           },
           child: Container(
-            width: 48,
-            height: 48,
+            width: 32,
+            height: 32,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16), color: widget.color),
           ),
@@ -101,8 +106,8 @@ class _ColorRadioItemState extends State<ColorRadioItem> {
         Visibility(
           visible: widget.selected,
           child: Container(
-            width: 48,
-            height: 48,
+            width: 32,
+            height: 32,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.white.withOpacity(0.5)),

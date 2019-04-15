@@ -108,7 +108,14 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
               SizedBox(
                 height: 32,
               ),
-              Container(height: 52, child: ColorRadio(key: _colorRadioKey))
+              Text("Colors",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+              SizedBox(height:16),
+              Container(height: 52, child: ColorRadio(key: _colorRadioKey)),
+              SizedBox(
+                height: 32,
+              ),
+              Text("Remind",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+              SizedBox(height:16),
             ],
           ),
         )

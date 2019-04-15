@@ -49,9 +49,9 @@ class _TaskListItemState extends State<TaskListItem> {
                 child: Container(),
               ),
               IconButton(
-                icon: Icon(Icons.share,color: Colors.black.withOpacity(0.56)),
+                icon: Icon(Icons.share,color: Colors.black.withOpacity(0.56),size: 18,),
                 onPressed: () {
-                  Share.share('www.justie.me');
+                  Share.share('${widget.task.name}');
                 },
               )
             ],
