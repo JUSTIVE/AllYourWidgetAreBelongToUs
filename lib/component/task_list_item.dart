@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/task.dart';
+import 'package:share/share.dart';
 
 class TaskListItem extends StatefulWidget {
   final Task task;
@@ -43,6 +44,15 @@ class _TaskListItemState extends State<TaskListItem> {
               Text(
                 widget.task.name,
                 style: Theme.of(context).textTheme.body1,
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              IconButton(
+                icon: Icon(Icons.share,color: Colors.black.withOpacity(0.56)),
+                onPressed: () {
+                  Share.share('www.justie.me');
+                },
               )
             ],
           ),

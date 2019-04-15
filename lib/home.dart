@@ -58,7 +58,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 32),
-                    child: Text("done"),
+                    child: Text(
+                      "DONE",
+                      style: Theme.of(context).textTheme.title,
+                    ),
                   ),
                   SizedBox(height: 16),
                   ListView(
