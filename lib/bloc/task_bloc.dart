@@ -3,12 +3,13 @@ import 'dart:ui';
 import '../model/task.dart';
 import 'package:bloc/bloc.dart';
 
+
 abstract class TaskEvent {}
 
 class AddTaskEvent extends TaskEvent {
   final String name;
   final Color color;
-  AddTaskEvent({@required this.name,@required this.color});
+  AddTaskEvent({@required this.name, @required this.color});
 }
 
 class DoneTaskEvent extends TaskEvent {
@@ -22,13 +23,17 @@ class TaskBloc extends Bloc<TaskEvent, List<Task>> {
   List<Task> get initialState => [];
 
   @override
-  Stream<List<Task>> mapEventToState(event)async* {
+  Stream<List<Task>> mapEventToState(event) async* {
     switch (event.runtimeType) {
       case AddTaskEvent:
-        
-        currentState.add(Task(id: counter++, name: (event as AddTaskEvent).name,color: (event as AddTaskEvent).color));
+        currentState.add(Task(
+            id: counter++,
+            name: (event as AddTaskEvent).name,
+            color: (event as AddTaskEvent).color));
         break;
       case DoneTaskEvent:
+        var item = currentState.firstWhere((x) => x.id == (event as DoneTaskEvent).id);
+        item.isDone=true;
         break;
     }
   }
