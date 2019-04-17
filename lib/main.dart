@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home.dart';
 import 'bloc/task_bloc.dart';
@@ -15,6 +16,13 @@ class MyAppState extends State<MyApp> {
   final TaskBloc _taskBloc = TaskBloc();
 
   @override
+  void initState() {
+ 
+    super.initState();
+    SystemChrome.setEnabledSystemUIOverlays([]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     // set material design app
     return BlocProviderTree(
@@ -26,6 +34,7 @@ class MyAppState extends State<MyApp> {
       child: BlocBuilder(
         bloc: _taskBloc,
         builder: (_, taskbloc) => MaterialApp(
+          
           debugShowCheckedModeBanner: false,
             title: 'solocoding2019', // application name
             theme: ThemeData(
