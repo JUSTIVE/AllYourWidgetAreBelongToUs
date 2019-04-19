@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "547694827329",
+    "firebase_url": "https://solocoding-94c4b.firebaseio.com",
+    "project_id": "solocoding-94c4b",
+    "storage_bucket": "solocoding-94c4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547694827329:android:c95334c56736d334",
+        "android_client_info": {
+          "package_name": "com.justie.solocoding2019_base"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547694827329-k3gnhulti1k7e3gg5fei06qel1avjec4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfV_lPXk1In9ZdJwC-CFGGcBc1ygnu2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547694827329-k3gnhulti1k7e3gg5fei06qel1avjec4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
