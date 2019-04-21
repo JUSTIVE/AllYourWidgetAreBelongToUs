@@ -6,12 +6,18 @@ class Task {
   String name;
   bool isDone;
   Color color;
+  DateTime doneTime;
+  DateTime goalTime;
+  bool shouldNotify;
 
   Task(
       {@required this.id,
       @required this.name,
       this.isDone = false,
-      this.color});
+      this.color,
+      this.goalTime,
+      this.shouldNotify
+      }):this.doneTime=DateTime.now();
 
   Task.map(dynamic obj) {
     this.id = int.parse(obj['id']);
