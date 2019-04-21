@@ -21,7 +21,6 @@ class _TaskListItemDoneState extends State<TaskListItemDone> {
   @override
   Widget build(BuildContext context) {
     final TaskBloc _taskBloc = BlocProvider.of<TaskBloc>(context);
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: widget.task.isDone ? 16 : 32),
       child: Material(
@@ -34,17 +33,37 @@ class _TaskListItemDoneState extends State<TaskListItemDone> {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: widget.task.isDone
-                        ? Colors.grey.shade100
-                        : widget.task.color),
+                    shape: BoxShape.circle, color: widget.task.color),
               ),
               SizedBox(
                 width: 16,
               ),
-              Text(
-                widget.task.name,
-                style: Theme.of(context).textTheme.body1,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.task.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(color: Colors.white.withOpacity(0.89)),
+                  ),
+                  Text(
+                    widget.task.doneTime.toUtc().year.toString() +
+                        "." +
+                        widget.task.doneTime.toUtc().month.toString() +
+                        "." +
+                        widget.task.doneTime.toUtc().day.toString() +
+                        " " +
+                        widget.task.doneTime.toUtc().hour.toString() +
+                        ":" +
+                        widget.task.doneTime.toUtc().minute.toString() +
+                        ":" +
+                        widget.task.doneTime.toUtc().second.toString(),
+                    style: TextStyle(
+                        fontSize: 10, color: Colors.white.withOpacity(0.89)),
+                  )
+                ],
               ),
               Expanded(
                 child: Container(),
@@ -52,7 +71,7 @@ class _TaskListItemDoneState extends State<TaskListItemDone> {
               IconButton(
                 icon: Icon(
                   Icons.share,
-                  color: Colors.black.withOpacity(0.56),
+                  color: Colors.white.withOpacity(0.89),
                   size: 18,
                 ),
                 onPressed: () {
