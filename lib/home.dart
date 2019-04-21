@@ -15,6 +15,10 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  void repaint() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final TaskBloc _taskBloc = BlocProvider.of<TaskBloc>(context);
@@ -38,7 +42,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                         style: Theme.of(context).textTheme.title,
                       ),
                     ),
-                    (bloc as List<Task>).where((x) => !x.isDone).length == 0
+                    SizedBox(height: 12),
+                    (bloc as List<Task>).where((x) => !x.isDone).isEmpty
                         ? Padding(
                             padding: EdgeInsets.only(left: 32),
                             child: Text("오늘 할일을 다 끝냈어요"))
@@ -50,7 +55,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                             itemBuilder: (context, index) => TaskListItem(
                                 task: (bloc as List<Task>)
                                     .where((x) => !x.isDone)
-                                    .toList()[index]),
+                                    .toList()[index],
+                                repaint: repaint),
                           ),
                     SizedBox(
                       height: 32,
@@ -99,8 +105,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             const EdgeInsets.only(left: 24),
                                         child: Text(
                                           "DONE",
-                                          style:
-                                              Theme.of(context).textTheme.title,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .title
+                                              .copyWith(
+                                                  color: Colors.white
+                                                      .withOpacity(0.89)),
                                         ),
                                       ),
                                       Column(
@@ -127,10 +137,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                 .toList())[index]))
                                                 : Container(),
                                           ),
-                                          
                                           IconButton(
-                                              icon:
-                                                  Icon(Icons.arrow_drop_down),
+                                              icon: Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.white
+                                                    .withOpacity(0.89),
+                                              ),
                                               onPressed: () =>
                                                   Navigator.pop(context))
                                         ],
