@@ -46,7 +46,7 @@ class _TaskListItemDoneState extends State<TaskListItemDone> {
                     style: Theme.of(context)
                         .textTheme
                         .body1
-                        .copyWith(color: Colors.white.withOpacity(0.89)),
+                        .copyWith(color: Colors.white.withOpacity(0.89),decoration:TextDecoration.lineThrough),
                   ),
                   Text(
                     widget.task.doneTime.toUtc().year.toString() +
