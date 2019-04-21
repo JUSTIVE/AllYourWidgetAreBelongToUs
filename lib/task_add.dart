@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:intl/intl.dart';
 
 import 'bloc/task_bloc.dart';
 import 'component/color_radio_widget.dart';
@@ -11,18 +13,21 @@ class TaskAddScreen extends StatefulWidget {
 
 class _TaskAddScreenState extends State<TaskAddScreen> {
   TextEditingController _textEditingController;
+  
   GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
   final _colorRadioKey = GlobalKey<ColorRadioState>();
+  bool isDateUpdated = false;
+  DateTime goalDateTime = DateTime.now();
 
   @override
   void initState() {
     _textEditingController = TextEditingController();
+    goalDateTime=DateTime.now();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final TaskBloc taskBloc = BlocProvider.of<TaskBloc>(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(children: [
@@ -63,14 +68,15 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
                       ),
                       onPressed: () {
                         if (_textEditingController.text.trim() != "") {
-                          print(ColorRadio.colorTable[_colorRadioKey
-                                      .currentState.currentColorId]);
-
+                          print(ColorRadio.colorTable[
+                              _colorRadioKey.currentState.currentColorId]);
                           BlocProvider.of<TaskBloc>(context).dispatch(
                               AddTaskEvent(
                                   name: _textEditingController.text,
                                   color: ColorRadio.colorTable[_colorRadioKey
-                                      .currentState.currentColorId]));
+                                      .currentState.currentColorId],
+                                  shouldNotify: isDateUpdated,
+                                  goalTime: goalDateTime));
                           Navigator.pop(context);
                         } else {
                           (_scaffoldKey.currentState as ScaffoldState)
@@ -106,14 +112,47 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
               SizedBox(
                 height: 32,
               ),
-              Text("Colors",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              SizedBox(height:16),
+              Text(
+                "Colors",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16),
               Container(height: 52, child: ColorRadio(key: _colorRadioKey)),
               SizedBox(
                 height: 32,
               ),
-              Text("Remind",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              SizedBox(height:16),
+              Text(
+                "Remind",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16),
+              DateTimePickerFormField(
+                initialValue: DateTime.now(),
+                inputType: InputType.both,
+                format: DateFormat('yyyy-MM-dd hh:mm:ss'),
+                editable: true,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+                resetIcon: Icons.close,
+                decoration: InputDecoration(
+                  labelText: "시간",
+                  labelStyle: TextStyle(fontSize: 24, color: Colors.white),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.white)),
+                ),
+                onChanged: (dt) => setState(() {
+                      goalDateTime = dt;
+                      isDateUpdated = true;
+                    }),
+              )
             ],
           ),
         )
