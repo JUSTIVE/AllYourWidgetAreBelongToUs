@@ -4,12 +4,16 @@ import '../model/task.dart';
 import 'package:share/share.dart';
 import '../bloc/task_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'task_info_view.dart';
 
 class TaskListItem extends StatefulWidget {
   final Task task;
   final VoidCallback repaint;
   final GlobalKey<ScaffoldState> parentScaffold;
-  TaskListItem({@required this.task,@required this.repaint, @required this.parentScaffold});
+  TaskListItem(
+      {@required this.task,
+      @required this.repaint,
+      @required this.parentScaffold});
   @override
   _TaskListItemState createState() => _TaskListItemState();
 }
@@ -37,7 +41,7 @@ class _TaskListItemState extends State<TaskListItem> {
             _taskBloc.dispatch(DeleteTaskEvent(id: widget.task.id));
             widget.repaint();
             widget.parentScaffold.currentState.showSnackBar(SnackBar(
-              content: Text(widget.task.name+" has been deleted"),
+              content: Text(widget.task.name + " has been deleted"),
             ));
           },
         )
@@ -51,7 +55,7 @@ class _TaskListItemState extends State<TaskListItem> {
                 DoneTaskEvent(id: widget.task.id, doneTime: DateTime.now()));
             widget.repaint();
             widget.parentScaffold.currentState.showSnackBar(SnackBar(
-              content: Text(widget.task.name+" has been done"),
+              content: Text(widget.task.name + " has been done"),
             ));
           },
         ),
@@ -60,11 +64,10 @@ class _TaskListItemState extends State<TaskListItem> {
           icon: Icons.archive,
           caption: "archive",
           onTap: () {
-            _taskBloc.dispatch(
-                ArchiveTaskEvent(id: widget.task.id));
+            _taskBloc.dispatch(ArchiveTaskEvent(id: widget.task.id));
             widget.repaint();
             widget.parentScaffold.currentState.showSnackBar(SnackBar(
-              content: Text(widget.task.name+" has been archived"),
+              content: Text(widget.task.name + " has been archived"),
             ));
           },
         )
@@ -73,57 +76,77 @@ class _TaskListItemState extends State<TaskListItem> {
         padding: EdgeInsets.symmetric(horizontal: 32),
         child: Material(
           color: Colors.transparent,
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: widget.task.color),
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      widget.task.name,
-                      style: Theme.of(context).textTheme.body1,
-                    ),
-                    widget.task.shouldNotify?
-                    Text(
-                      widget.task.goalTime.toUtc().year.toString() +
-                        "." +
-                        widget.task.goalTime.toUtc().month.toString() +
-                        "." +
-                        widget.task.goalTime.toUtc().day.toString() +
-                        " " +
-                        widget.task.goalTime.toUtc().hour.toString() +
-                        ":" +
-                        widget.task.goalTime.toUtc().minute.toString() +
-                        ":" +
-                        widget.task.goalTime.toUtc().second.toString(),
-                        style: TextStyle(fontSize: 10),
-                    ):Container()
-                  ],
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.share,
-                    color: Colors.black.withOpacity(0.56),
-                    size: 18,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TaskInfoView(
+                            task: widget.task,
+                          )));
+            },
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: widget.task.color),
                   ),
-                  onPressed: () {
-                    Share.share('${widget.task.name}');
-                  },
-                )
-              ],
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        widget.task.name,
+                        style: Theme.of(context).textTheme.body1,
+                      ),
+                      widget.task.shouldNotify
+                          ? Text(
+                              widget.task.goalTime.toUtc().year.toString() +
+                                  "." +
+                                  widget.task.goalTime
+                                      .toUtc()
+                                      .month
+                                      .toString() +
+                                  "." +
+                                  widget.task.goalTime.toUtc().day.toString() +
+                                  " " +
+                                  widget.task.goalTime.toUtc().hour.toString() +
+                                  ":" +
+                                  widget.task.goalTime
+                                      .toUtc()
+                                      .minute
+                                      .toString() +
+                                  ":" +
+                                  widget.task.goalTime
+                                      .toUtc()
+                                      .second
+                                      .toString(),
+                              style: TextStyle(fontSize: 10),
+                            )
+                          : Container()
+                    ],
+                  ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.share,
+                      color: Colors.black.withOpacity(0.56),
+                      size: 18,
+                    ),
+                    onPressed: () {
+                      Share.share('${widget.task.name}');
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),

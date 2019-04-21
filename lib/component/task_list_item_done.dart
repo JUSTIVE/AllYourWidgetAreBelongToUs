@@ -29,11 +29,14 @@ class _TaskListItemDoneState extends State<TaskListItemDone> {
           padding: EdgeInsets.all(8),
           child: Row(
             children: <Widget>[
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: widget.task.color),
+              Hero(
+                tag: widget.task.id,
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: widget.task.color),
+                ),
               ),
               SizedBox(
                 width: 16,
@@ -43,10 +46,9 @@ class _TaskListItemDoneState extends State<TaskListItemDone> {
                 children: <Widget>[
                   Text(
                     widget.task.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .body1
-                        .copyWith(color: Colors.white.withOpacity(0.89),decoration:TextDecoration.lineThrough),
+                    style: Theme.of(context).textTheme.body1.copyWith(
+                        color: Colors.white.withOpacity(0.89),
+                        decoration: TextDecoration.lineThrough),
                   ),
                   Text(
                     widget.task.doneTime.toUtc().year.toString() +

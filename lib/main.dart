@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home.dart';
 import 'bloc/task_bloc.dart';
 
-
 void main() => runApp(MyApp());
 
 // This widget is the root of your application.
@@ -18,7 +17,6 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
- 
     super.initState();
     SystemChrome.setEnabledSystemUIOverlays([]);
   }
@@ -35,22 +33,16 @@ class MyAppState extends State<MyApp> {
       child: BlocBuilder(
         bloc: _taskBloc,
         builder: (_, taskbloc) => MaterialApp(
-          
-          debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: false,
             title: 'solocoding2019', // application name
             theme: ThemeData(
-              primarySwatch: Colors.blue,
-              textTheme: TextTheme(
-                title: TextStyle(
-                  fontSize: 42,
-                  color: Colors.black.withOpacity(0.56),
-                  fontWeight: FontWeight.w900
-                ),
-                body1: TextStyle(
-                  fontSize: 18
-                )
-              )
-            ),
+                primarySwatch: Colors.blue,
+                textTheme: TextTheme(
+                    title: TextStyle(
+                        fontSize: 42,
+                        color: Colors.black.withOpacity(0.56),
+                        fontWeight: FontWeight.w900),
+                    body1: TextStyle(fontSize: 18))),
             home: HomeWidget()),
       ),
     );
