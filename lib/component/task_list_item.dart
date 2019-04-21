@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/task.dart';
 import 'package:share/share.dart';
 import '../bloc/task_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskListItem extends StatefulWidget {
   final Task task;
-  TaskListItem({@required this.task});
+  final VoidCallback repaint;
+  TaskListItem({@required this.task,@required this.repaint});
   @override
   _TaskListItemState createState() => _TaskListItemState();
 }
@@ -22,19 +24,31 @@ class _TaskListItemState extends State<TaskListItem> {
   Widget build(BuildContext context) {
     final TaskBloc _taskBloc = BlocProvider.of<TaskBloc>(context);
 
-    return Dismissible(
+    return Slidable(
       key: Key(widget.task.id.toString() + widget.task.isDone.toString()),
-      onDismissed: (direction) {
-        switch (direction) {
-          case DismissDirection.startToEnd:
-            _taskBloc.dispatch(DoneTaskEvent(id: widget.task.id));
-            break;
-          case DismissDirection.endToStart:
-            break;
-          default:
-            break;
-        }
-      },
+      delegate: SlidableScrollDelegate(),
+      actions: <Widget>[
+        IconSlideAction(
+          icon: Icons.delete,
+          color: Colors.red.shade300,
+          caption: "delete",
+          onTap: () {
+            _taskBloc.dispatch(DeleteTaskEvent(id: widget.task.id));
+            widget.repaint();
+          },
+        )
+      ],
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          icon: Icons.check,
+          caption: "done",
+          onTap: () {
+            _taskBloc.dispatch(
+                DoneTaskEvent(id: widget.task.id, doneTime: DateTime.now()));
+            widget.repaint();
+          },
+        )
+      ],
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 32),
         child: Material(
