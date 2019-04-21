@@ -43,8 +43,6 @@ class _TaskAddScreenState extends State<TaskAddScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: ListView(
-            
-            
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 48),
