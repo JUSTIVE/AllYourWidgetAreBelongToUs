@@ -16,6 +16,9 @@ dependencies:
   share: ^0.6.1
   flutter_slidable: any
   firebase_database: ^2.0.3
+  scheduled_notifications: any
+  datetime_picker_formfield: ^0.1.8
+  notification_permissions: ^0.2.2
 
 
   # The following adds the Cupertino Icons font to your application.
