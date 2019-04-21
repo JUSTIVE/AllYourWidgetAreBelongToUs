@@ -8,7 +8,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class TaskListItem extends StatefulWidget {
   final Task task;
   final VoidCallback repaint;
-  TaskListItem({@required this.task,@required this.repaint});
+  final GlobalKey<ScaffoldState> parentScaffold;
+  TaskListItem({@required this.task,@required this.repaint, @required this.parentScaffold});
   @override
   _TaskListItemState createState() => _TaskListItemState();
 }
@@ -35,6 +36,9 @@ class _TaskListItemState extends State<TaskListItem> {
           onTap: () {
             _taskBloc.dispatch(DeleteTaskEvent(id: widget.task.id));
             widget.repaint();
+            widget.parentScaffold.currentState.showSnackBar(SnackBar(
+              content: Text(widget.task.name+" has been deleted"),
+            ));
           },
         )
       ],
@@ -46,6 +50,22 @@ class _TaskListItemState extends State<TaskListItem> {
             _taskBloc.dispatch(
                 DoneTaskEvent(id: widget.task.id, doneTime: DateTime.now()));
             widget.repaint();
+            widget.parentScaffold.currentState.showSnackBar(SnackBar(
+              content: Text(widget.task.name+" has been done"),
+            ));
+          },
+        ),
+        IconSlideAction(
+          color: Colors.blue,
+          icon: Icons.archive,
+          caption: "archive",
+          onTap: () {
+            _taskBloc.dispatch(
+                ArchiveTaskEvent(id: widget.task.id));
+            widget.repaint();
+            widget.parentScaffold.currentState.showSnackBar(SnackBar(
+              content: Text(widget.task.name+" has been archived"),
+            ));
           },
         )
       ],
@@ -66,9 +86,29 @@ class _TaskListItemState extends State<TaskListItem> {
                 SizedBox(
                   width: 16,
                 ),
-                Text(
-                  widget.task.name,
-                  style: Theme.of(context).textTheme.body1,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      widget.task.name,
+                      style: Theme.of(context).textTheme.body1,
+                    ),
+                    widget.task.shouldNotify?
+                    Text(
+                      widget.task.goalTime.toUtc().year.toString() +
+                        "." +
+                        widget.task.goalTime.toUtc().month.toString() +
+                        "." +
+                        widget.task.goalTime.toUtc().day.toString() +
+                        " " +
+                        widget.task.goalTime.toUtc().hour.toString() +
+                        ":" +
+                        widget.task.goalTime.toUtc().minute.toString() +
+                        ":" +
+                        widget.task.goalTime.toUtc().second.toString(),
+                        style: TextStyle(fontSize: 10),
+                    ):Container()
+                  ],
                 ),
                 Expanded(
                   child: Container(),
