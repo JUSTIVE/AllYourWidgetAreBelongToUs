@@ -20,6 +20,16 @@ class AddTaskEvent extends TaskEvent {
       @required this.goalTime});
 }
 
+class ArchiveTaskEvent extends TaskEvent {
+  final int id;
+  ArchiveTaskEvent({this.id});
+}
+
+class UnArchiveTaskEvent extends TaskEvent {
+  final int id;
+  UnArchiveTaskEvent({this.id});
+}
+
 class DoneTaskEvent extends TaskEvent {
   final int id;
   final DateTime doneTime;
@@ -49,6 +59,16 @@ class TaskBloc extends Bloc<TaskEvent, List<Task>> {
             color: (event as AddTaskEvent).color,
             shouldNotify: (event as AddTaskEvent).shouldNotify,
             goalTime: (event as AddTaskEvent).goalTime));
+        break;
+      case ArchiveTaskEvent:
+        currentState
+            .firstWhere((x) => x.id == (event as ArchiveTaskEvent).id)
+            .isArchived = true;
+        break;
+      case UnArchiveTaskEvent:
+        currentState
+            .firstWhere((x) => x.id == (event as UnArchiveTaskEvent).id)
+            .isArchived = false;
         break;
       case DoneTaskEvent:
         var item =
