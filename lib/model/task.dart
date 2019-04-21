@@ -9,15 +9,16 @@ class Task {
   DateTime doneTime;
   DateTime goalTime;
   bool shouldNotify;
-
+  bool isArchived;
   Task(
       {@required this.id,
       @required this.name,
       this.isDone = false,
       this.color,
       this.goalTime,
-      this.shouldNotify
-      }):this.doneTime=DateTime.now();
+      this.shouldNotify})
+      : this.doneTime = DateTime.now(),
+        this.isArchived = false;
 
   Task.map(dynamic obj) {
     this.id = int.parse(obj['id']);
